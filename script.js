@@ -37,16 +37,19 @@ function promptForWord(promptText, callback) {
 // Function to compare words and update the score
 function compareWordsAndCalculateScore(inputWords, wordList) {
   wordList.forEach((listWord) => {
-    let correctLetters = new Set();
-    let charIndices = new Map();
+    let correctLetters = new Set(); // Set of correct letters and indices
+    let charIndices = new Map(); // Map of correct letters and their incorrectly guessed indices
     let localScore = 0;
 
     inputWords.forEach((inputWord) => {
       for (let i = 0; i < 5; i++) {
+        // If letter and index match
         if (inputWord[i] == listWord[i] && !correctLetters.has(inputWord[i])) {
           localScore += 3;
           correctLetters.add(inputWord[i]);
-        } else if (
+        }
+        // If index matches unique to the letter
+        else if (
           listWord.includes(inputWord[i]) &&
           (!charIndices.has(inputWord[i]) || !charIndices.get(inputWord[i]).includes(i)) &&
           !correctLetters.has(inputWord[i])
@@ -76,7 +79,6 @@ function getThreeWords() {
         thirdWord = word3;
         rl.close();
 
-        // Compare words and calculate the score
         compareWordsAndCalculateScore([firstWord, secondWord, thirdWord], words);
 
         console.log(`Total Score: ${(score / words.length / 15) * 100}%`);
