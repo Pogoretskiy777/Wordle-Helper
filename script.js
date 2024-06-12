@@ -87,5 +87,28 @@ function getThreeWords() {
   });
 }
 
+function findBestScore() {
+  let max = 0;
+  let numOfIter = 0;
+  let bestWords = [];
+  for (let i = 0; i < 98; i++) {
+    for (let j = i + 1; j < 99; j++) {
+      for (let k = j + 1; k < 100; k++) {
+        compareWordsAndCalculateScore([words[i], words[j], words[k]], words);
+        if (score > max) {
+          max = score;
+          bestWords = [];
+          bestWords.push(words[i], words[j], words[k]);
+        }
+        score = 0;
+        numOfIter++;
+        console.log(`Completed iteration #${numOfIter}`);
+      }
+    }
+  }
+  console.log(`Best word combo: ${bestWords[0]}, ${bestWords[1]}, and ${bestWords[2]}`);
+  console.log(`Max score: ${score}`);
+}
+
 // Start the process
-getThreeWords();
+findBestScore();
