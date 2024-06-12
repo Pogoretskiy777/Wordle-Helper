@@ -39,18 +39,19 @@ function compareWordsAndCalculateScore(inputWords, wordList) {
   wordList.forEach((listWord) => {
     let correctLetters = new Set();
     let charIndices = new Map();
+    let localScore = 0;
 
     inputWords.forEach((inputWord) => {
       for (let i = 0; i < 5; i++) {
         if (inputWord[i] == listWord[i] && !correctLetters.has(inputWord[i])) {
-          score += 3;
+          localScore += 3;
           correctLetters.add(inputWord[i]);
         } else if (
           listWord.includes(inputWord[i]) &&
           (!charIndices.has(inputWord[i]) || !charIndices.get(inputWord[i]).includes(i)) &&
           !correctLetters.has(inputWord[i])
         ) {
-          score += 1;
+          localScore += 1;
           if (!charIndices.has(inputWord[i])) {
             charIndices.set(inputWord[i], [i]);
           } else {
@@ -59,14 +60,15 @@ function compareWordsAndCalculateScore(inputWords, wordList) {
         }
       }
     });
+    score += localScore;
   });
 }
 
 // Main function to get three words from the user and calculate the score
 function getThreeWords() {
-  let firstWord = "trees",
-    secondWord = "trees",
-    thirdWord = "trees";
+  let firstWord = "huzza",
+    secondWord = "huzza",
+    thirdWord = "huzza";
 
   rl.close();
   console.log(`First word: ${firstWord}`);
@@ -76,7 +78,7 @@ function getThreeWords() {
   // Compare words and calculate the score
   compareWordsAndCalculateScore([firstWord, secondWord, thirdWord], words);
 
-  console.log(`Total Score: ${score}/${words.length * 15}`);
+  console.log(`Total Score: ${(score / words.length / 15) * 100}%`);
 }
 
 // Start the process
