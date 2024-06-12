@@ -25,7 +25,7 @@ const rl = readline.createInterface({
 function promptForWord(promptText, callback) {
   rl.question(promptText, (input) => {
     const lowercasedInput = input.toLowerCase();
-    if (words.includes(lowercasedInput)) {
+    if (lowercasedInput === "" || words.includes(lowercasedInput)) {
       callback(lowercasedInput);
     } else {
       console.log("Invalid input. Please enter a valid word from the list.");
@@ -66,19 +66,23 @@ function compareWordsAndCalculateScore(inputWords, wordList) {
 
 // Main function to get three words from the user and calculate the score
 function getThreeWords() {
-  let firstWord = "huzza",
-    secondWord = "huzza",
-    thirdWord = "huzza";
+  let firstWord, secondWord, thirdWord;
 
-  rl.close();
-  console.log(`First word: ${firstWord}`);
-  console.log(`Second word: ${secondWord}`);
-  console.log(`Third word: ${thirdWord}`);
+  promptForWord("Enter the first word: ", (word1) => {
+    firstWord = word1;
+    promptForWord("Enter the second word: ", (word2) => {
+      secondWord = word2;
+      promptForWord("Enter the third word: ", (word3) => {
+        thirdWord = word3;
+        rl.close();
 
-  // Compare words and calculate the score
-  compareWordsAndCalculateScore([firstWord, secondWord, thirdWord], words);
+        // Compare words and calculate the score
+        compareWordsAndCalculateScore([firstWord, secondWord, thirdWord], words);
 
-  console.log(`Total Score: ${(score / words.length / 15) * 100}%`);
+        console.log(`Total Score: ${(score / words.length / 15) * 100}%`);
+      });
+    });
+  });
 }
 
 // Start the process
