@@ -71,11 +71,11 @@ void *findBestScore(void *arg)
   char local_best_words[3][WORD_LENGTH + 1];
   int numOfIter = 0;
 
-  for (int i = thread_id; i < 98; i += NUM_THREADS)
+  for (int i = thread_id; i < 498; i += NUM_THREADS)
   {
-    for (int j = i + 1; j < 99; j++)
+    for (int j = i + 1; j < 499; j++)
     {
-      for (int k = j + 1; k < 100; k++)
+      for (int k = j + 1; k < 500; k++)
       {
         char inputWords[3][WORD_LENGTH + 1];
         strcpy(inputWords[0], words[i]);

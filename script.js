@@ -111,4 +111,4 @@ function findBestScore() {
 }
 
 // Start the process
-findBestScore();
+getThreeWords();
