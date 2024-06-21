@@ -39,6 +39,7 @@ function compareWordsAndCalculateScore(inputWords, wordList) {
   wordList.forEach((listWord) => {
     let correctLetters = new Set(); // Set of correct letters and indices
     let charIndices = new Map(); // Map of correct letters and their incorrectly guessed indices
+    let lettersCompared = new Set(); // Set of correct letters with incorrect indices
     let localScore = 0;
 
     inputWords.forEach((inputWord) => {
@@ -52,9 +53,11 @@ function compareWordsAndCalculateScore(inputWords, wordList) {
         else if (
           listWord.includes(inputWord[i]) &&
           (!charIndices.has(inputWord[i]) || !charIndices.get(inputWord[i]).includes(i)) &&
-          !correctLetters.has(inputWord[i])
+          !correctLetters.has(inputWord[i]) &&
+          !lettersCompared.has(inputWord[i])
         ) {
           localScore += 1;
+          lettersCompared.add(inputWord[i]);
           if (!charIndices.has(inputWord[i])) {
             charIndices.set(inputWord[i], [i]);
           } else {
